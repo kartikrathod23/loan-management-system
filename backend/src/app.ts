@@ -5,6 +5,8 @@ import {errorMiddleware} from "./middlewares/error.middleware";
 import authRoutes from "./modules/auth/auth.routes";
 import userRoutes from "./modules/users/user.routes"
 import borrowerRoutes from "./modules/borrower/borrower.routes"
+import documentsRoutes from "./modules/documents/document.routes"
+import loanRoutes from "./modules/loans/loan.routes"
 
 const app = express();
 
@@ -20,6 +22,8 @@ app.use(cookieParser());
 app.use("/api/auth",authRoutes);
 app.use("/api/users",userRoutes);
 app.use("/api/borrower",borrowerRoutes);
+app.use('/api/documents', documentsRoutes)
+app.use('/api/loans',loanRoutes);
 
 app.get("/", (_req, res)=>{
   res.send("Loan Management Backend Running");
