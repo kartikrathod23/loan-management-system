@@ -72,7 +72,7 @@ export const logout = asyncHandler(async (_req: Request, res: Response) => {
 );
 
 
-export const getCurrentUser = asyncHandler(async (req: Request, res: Response) => {
+export const getCurrentUser = asyncHandler(async (req: Request, res: Response)=>{
     const user = await User.findById(req.user?.userId);
 
     if(!user){
