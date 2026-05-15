@@ -10,6 +10,9 @@ export interface ILoan {
     totalRepayment: number;
     monthlyEMI: number;
     status: LoanStatus;
+    sanctionedBy?: mongoose.Types.ObjectId;
+    sanctionRemarks?: string;
+    sanctionedAt?: Date;
 }
 
 const loanSchema = new Schema<ILoan>({

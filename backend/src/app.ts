@@ -7,6 +7,7 @@ import userRoutes from "./modules/users/user.routes"
 import borrowerRoutes from "./modules/borrower/borrower.routes"
 import documentsRoutes from "./modules/documents/document.routes"
 import loanRoutes from "./modules/loans/loan.routes"
+import sanctionRoutes from "./modules/sanction/sanction.routes"
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use("/api/users",userRoutes);
 app.use("/api/borrower",borrowerRoutes);
 app.use('/api/documents', documentsRoutes)
 app.use('/api/loans',loanRoutes);
+app.use('/api/sanction',sanctionRoutes);
 
 app.get("/", (_req, res)=>{
   res.send("Loan Management Backend Running");
