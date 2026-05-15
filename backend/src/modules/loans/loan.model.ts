@@ -13,6 +13,9 @@ export interface ILoan {
     sanctionedBy?: mongoose.Types.ObjectId;
     sanctionRemarks?: string;
     sanctionedAt?: Date;
+    disbursedBy?: mongoose.Types.ObjectId;
+    disbursedAt?: Date;
+    transactionReference?: string;
 }
 
 const loanSchema = new Schema<ILoan>({
@@ -69,6 +72,19 @@ const loanSchema = new Schema<ILoan>({
 
     sanctionedAt: {
         type: Date,
+    },
+
+    disbursedBy: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    },
+
+    disbursedAt: {
+        type: Date,
+    },
+
+    transactionReference: {
+        type: String,
     },
 },
     {
