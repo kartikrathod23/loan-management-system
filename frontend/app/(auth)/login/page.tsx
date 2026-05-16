@@ -8,6 +8,7 @@ import AuthLayout from "@/components/layout/auth-layout";
 import { loginUser } from "@/services/auth.service";
 import { useAuthStore } from "@/store/auth.store";
 import Link from "next/link";
+import { getBorrowerProfile } from "@/services/borrower.service";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -38,8 +39,14 @@ export default function LoginPage() {
 
                 const role =response.data.user.role;
 
-                if(role ==="BORROWER") {
-                    router.push("/borrower");
+                if(role ==="BORROWER"){
+                    try {
+                        await getBorrowerProfile();
+                        router.push("/borrower");
+                    } catch {
+                        router.push("/borrower/onboarding");
+                    }
+
                 }else {
                     router.push("/dashboard");
                 }

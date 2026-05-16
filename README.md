@@ -343,7 +343,7 @@ To prioritize the complete workflow within the deadline, advanced UI polishing a
 # Video Demonstration
 
 ```text
-Demo Video: 
+Demo Video: https://drive.google.com/file/d/1HmHsp29D41NSGNOqfwobjELfGp5FvJ13/view?usp=sharing
 ```
 
 ---
