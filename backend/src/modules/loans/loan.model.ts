@@ -16,6 +16,9 @@ export interface ILoan {
     disbursedBy?: mongoose.Types.ObjectId;
     disbursedAt?: Date;
     transactionReference?: string;
+    remainingAmount?: number;
+    totalPaidAmount?: number;
+    closedAt?: Date;
 }
 
 const loanSchema = new Schema<ILoan>({
@@ -85,6 +88,18 @@ const loanSchema = new Schema<ILoan>({
 
     transactionReference: {
         type: String,
+    },
+    remainingAmount: {
+        type: Number,
+    },
+
+    totalPaidAmount: {
+        type: Number,
+        default: 0,
+    },
+
+    closedAt: {
+        type: Date,
     },
 },
     {

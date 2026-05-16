@@ -10,6 +10,7 @@ import loanRoutes from "./modules/loans/loan.routes"
 import sanctionRoutes from "./modules/sanction/sanction.routes"
 import disbursementRoutes from "./modules/disbursement/disbursement.routes";
 import dashboardRoutes from "./modules/dashboard/dashboard.routes"
+import repaymentRoutes from "./modules/repayment/repayment.routes";
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use('/api/loans',loanRoutes);
 app.use('/api/sanction',sanctionRoutes);
 app.use('/api/disbursement', disbursementRoutes);
 app.use('/api/dashboard',dashboardRoutes);
+app.use('/api/repayment', repaymentRoutes);
 
 app.get("/", (_req, res)=>{
   res.send("Loan Management Backend Running");

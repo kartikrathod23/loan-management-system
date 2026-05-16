@@ -29,6 +29,8 @@ export const createLoan = async (userId: string, payload: unknown) => {
             borrowerId: userId,
             ...validatedData,
             ...calculations,
+            remainingAmount:calculations.totalRepayment,
+            totalPaidAmount: 0,
         });
 
     return loan;
