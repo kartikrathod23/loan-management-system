@@ -4,7 +4,7 @@ import { LoanStatus } from "./loan.types";
 export interface ILoan {
     borrowerId: mongoose.Types.ObjectId;
     principalAmount: number;
-    tenureMonths: number;
+    tenureDays: number;
     interestRate: number;
     totalInterest: number;
     totalRepayment: number;
@@ -33,7 +33,7 @@ const loanSchema = new Schema<ILoan>({
         required: true,
     },
 
-    tenureMonths: {
+    tenureDays: {
         type: Number,
         required: true,
     },
@@ -91,6 +91,7 @@ const loanSchema = new Schema<ILoan>({
     },
     remainingAmount: {
         type: Number,
+        default:0,
     },
 
     totalPaidAmount: {

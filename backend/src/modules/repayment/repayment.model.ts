@@ -34,6 +34,7 @@ const repaymentSchema = new Schema<IRepayment>({
     transactionReference: {
         type: String,
         required: true,
+        unique:true,
     },
 },
     {

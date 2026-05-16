@@ -1,15 +1,16 @@
 interface LoanCalculationInput {
     principalAmount: number;
     interestRate: number;
-    tenureMonths: number;
+    tenureDays: number;
 }
 
 export const calculateLoanDetails = (payload: LoanCalculationInput) => {
-    const { principalAmount, interestRate, tenureMonths, } = payload;
-    const yearlyInterest = (principalAmount * interestRate) / 100;
-    const totalInterest = (yearlyInterest * tenureMonths) / 12;
-    const totalRepayment = principalAmount + totalInterest;
-    const monthlyEMI = totalRepayment / tenureMonths;
+    const { principalAmount, interestRate, tenureDays, } = payload;
+    // const yearlyInterest = (principalAmount * interestRate) / 100;
+    const totalInterest =(principalAmount *interestRate *tenureDays) /(365 * 100);
+    const totalRepayment =principalAmount +totalInterest;
+    const monthlyEMI =totalRepayment/(tenureDays / 30);
+
 
     return {
         totalInterest: Number(totalInterest.toFixed(2)),

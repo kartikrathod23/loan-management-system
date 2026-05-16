@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import {errorMiddleware} from "./middlewares/error.middleware";
+import {globalErrorHandler} from "./middlewares/error.middleware";
 import authRoutes from "./modules/auth/auth.routes";
 import userRoutes from "./modules/users/user.routes"
 import borrowerRoutes from "./modules/borrower/borrower.routes"
@@ -37,6 +37,6 @@ app.get("/", (_req, res)=>{
   res.send("Loan Management Backend Running");
 });
 
-app.use(errorMiddleware);
+app.use(globalErrorHandler);
 
 export default app;

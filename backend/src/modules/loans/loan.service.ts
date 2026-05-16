@@ -21,7 +21,7 @@ export const createLoan = async (userId: string, payload: unknown) => {
         calculateLoanDetails({
             principalAmount: validatedData.principalAmount,
             interestRate: validatedData.interestRate,
-            tenureMonths: validatedData.tenureMonths,
+            tenureDays: validatedData.tenureDays,
         });
 
     const loan =
