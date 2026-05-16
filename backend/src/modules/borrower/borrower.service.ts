@@ -33,3 +33,8 @@ export const createBorrowerProfile =async (userId: string,payload: unknown)=>{
 
     return borrower;
   };
+
+
+export const getBorrowerProfile = async (userId: string) => {
+    return await Borrower.findOne({ userId });
+};

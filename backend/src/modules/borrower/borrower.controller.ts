@@ -1,7 +1,7 @@
 import { Request, Response, } from "express";
 import { asyncHandler } from "../../shared/handlers/asyncHandler";
 import { sendResponse } from "../../shared/responses/sendResponse";
-import { createBorrowerProfile } from "./borrower.service";
+import { createBorrowerProfile,getBorrowerProfile } from "./borrower.service";
 
 export const createProfile = asyncHandler(async (req: Request, res: Response) => {
     const borrower = await createBorrowerProfile(req.user!.userId, req.body);
@@ -11,4 +11,19 @@ export const createProfile = asyncHandler(async (req: Request, res: Response) =>
         data: borrower,
     });
 }
+);
+
+export const getMyBorrowerProfile = asyncHandler(
+    async (req: Request, res: Response) => {
+
+        const borrower = await getBorrowerProfile(
+            req.user!.userId
+        );
+
+        sendResponse(res, 200, {
+            success: true,
+            message: "Borrower profile fetched",
+            data: borrower,
+        });
+    }
 );

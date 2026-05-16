@@ -35,3 +35,14 @@ export const createLoan = async (userId: string, payload: unknown) => {
 
     return loan;
 };
+
+
+export const getLoansByBorrower = async (
+    borrowerId: string
+) => {
+
+    return await Loan.find({
+        borrowerId,
+    }).sort({ createdAt: -1 });
+
+};

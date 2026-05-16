@@ -3,25 +3,16 @@ import { UserRole } from "../users/user.types";
 import { Loan } from "../loans/loan.model";
 import { LoanStatus } from "../loans/loan.types";
 import { Document } from "../documents/document.model";
+import { Borrower } from "../borrower/borrower.model";
 
 export const getAdminDashboardStats = async () => {
-    const [
-        totalUsers,
-        totalBorrowers,
-        totalLoans,
-        pendingLoans,
-        sanctionedLoans,
-        activeLoans,
-        rejectedLoans,
-    ] = await Promise.all([
+    const [totalUsers, totalBorrowers, totalLoans, pendingLoans, sanctionedLoans, activeLoans, rejectedLoans,] = await Promise.all([
         User.countDocuments(),
-
         User.countDocuments({
             role: UserRole.BORROWER,
         }),
 
         Loan.countDocuments(),
-
         Loan.countDocuments({
             status: LoanStatus.PENDING,
         }),
@@ -39,28 +30,25 @@ export const getAdminDashboardStats = async () => {
         }),
     ]);
 
-    const disbursedAmountResult =
-        await Loan.aggregate([
-            {
-                $match: {
-                    status: LoanStatus.ACTIVE,
+    const disbursedAmountResult = await Loan.aggregate([
+        {
+            $match: {
+                status: LoanStatus.ACTIVE,
+            },
+        },
+
+        {
+            $group: {
+                _id: null,
+
+                totalDisbursed: {
+                    $sum: "$principalAmount",
                 },
             },
+        },
+    ]);
 
-            {
-                $group: {
-                    _id: null,
-
-                    totalDisbursed: {
-                        $sum: "$principalAmount",
-                    },
-                },
-            },
-        ]);
-
-    const totalDisbursedAmount =
-        disbursedAmountResult[0]
-            ?.totalDisbursed || 0;
+    const totalDisbursedAmount = disbursedAmountResult[0]?.totalDisbursed || 0;
 
     return {
         totalUsers,
@@ -74,17 +62,46 @@ export const getAdminDashboardStats = async () => {
     };
 };
 
+export const getBorrowerDashboard = async (userId: string) => {
 
-export const getBorrowerDashboard = async (userId: string)=>{
-    const loans = await Loan.find({borrowerId: userId,}).sort({createdAt: -1,});
-    const documents = await Document.find({borrowerId: userId,}).sort({createdAt: -1,});
+    const borrower = await Borrower.findOne({
+        userId,
+    });
+
+    const loans = await Loan.find({
+        borrowerId: userId,
+    }).sort({
+        createdAt: -1,
+    });
+
+    const documents = await Document.find({
+        borrowerId: userId,
+    }).sort({
+        createdAt: -1,
+    });
+
     const totalLoans = loans.length;
-    const activeLoans = loans.filter((loan) => loan.status === LoanStatus.ACTIVE).length;
-    const rejectedLoans = loans.filter((loan) => loan.status === LoanStatus.REJECTED).length;
-    const totalBorrowedAmount = loans.reduce((sum, loan) =>sum + loan.principalAmount,0);
+    const activeLoans = loans.filter(
+        (loan) => loan.status === LoanStatus.ACTIVE
+    ).length;
+
+    const rejectedLoans = loans.filter(
+        (loan) => loan.status === LoanStatus.REJECTED
+    ).length;
+
+    const totalBorrowedAmount = loans.reduce(
+        (sum, loan) => sum + loan.principalAmount,
+        0
+    );
 
     return {
-        summary: {totalLoans,activeLoans,rejectedLoans,totalBorrowedAmount,},
+        borrower,
+        summary: {
+            totalLoans,
+            activeLoans,
+            rejectedLoans,
+            totalBorrowedAmount,
+        },
         loans,
         documents,
     };

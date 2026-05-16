@@ -8,9 +8,15 @@ import { getBorrowerDashboardData } from "./dashboard.controller";
 const router = Router();
 
 router.get(
-    "/admin",
+    "/stats",
     authenticateUser,
-    authorizeRoles(UserRole.ADMIN),
+    authorizeRoles(
+        UserRole.ADMIN,
+        UserRole.SALES,
+        UserRole.SANCTION,
+        UserRole.DISBURSEMENT,
+        UserRole.COLLECTION
+    ),
     getAdminDashboard
 );
 
